@@ -15,6 +15,7 @@ const Home = () => {
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = (query: string) => setSearchQuery(query);
     const [loading, setLoading] = React.useState(true);
+    const [listItemCount, setListItemCount] = React.useState(0);
 
     React.useEffect(() => {
         const getAllCards = () => {
@@ -42,10 +43,17 @@ const Home = () => {
     }, [])
 
     React.useEffect(() => {
-        console.log('cardState: ', cardState)
         if (Object.keys(cardState.allCards).length > 0)
             setLoading(false)
-    }, [cardState])
+    }, [cardState.allCards])
+
+    React.useEffect(() => {
+        let total = 0;
+        for (let section of cardState.sectionList)
+            total += section.data.length
+
+        setListItemCount(total);
+    }, [cardState.sectionList])
 
 
     return (
@@ -92,6 +100,7 @@ const Home = () => {
                     onPress={() => setFilterModalVisible(true)}
                 />
             </View>
+            <Text style={{ marginRight: 10, alignSelf: 'flex-end', color: "#FFF" }}>{`Total Item: ${listItemCount}`}</Text>
             <FlatList
                 data={cardState.sectionList}
                 keyExtractor={(section) => section.title}
