@@ -1,5 +1,5 @@
 import React from "react"
-import { FlatList, StyleSheet, Text, View, Modal, TouchableWithoutFeedback } from "react-native"
+import { FlatList, StyleSheet, Text, View, Modal, TouchableWithoutFeedback, ImageBackground } from "react-native"
 import { Button, Headline, IconButton, Searchbar } from "react-native-paper"
 import ButtonFilter from "../components/ButtonFilter"
 import Card from "../components/Card"
@@ -14,10 +14,7 @@ const Home = () => {
     const mechanicList = React.useMemo(() => Object.keys(cardState.cardMechanicList), [cardState.cardMechanicList])
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = (query: string) => setSearchQuery(query);
-    const [loading, setLoading] = React.useState(true)
-    // const mechanicFilterResult = React.useCallback((result) => {
-    //     console.log(result);
-    // }, [])
+    const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
         const getAllCards = () => {
@@ -45,14 +42,19 @@ const Home = () => {
     }, [])
 
     React.useEffect(() => {
+        console.log('cardState: ', cardState)
         if (Object.keys(cardState.allCards).length > 0)
             setLoading(false)
-        console.log('cardState: ', cardState)
     }, [cardState])
 
 
     return (
         <>
+            <ImageBackground
+                style={StyleSheet.absoluteFillObject}
+                source={require('../assets/images/bg.png')}
+                resizeMode={"cover"}
+            />
             <Loading loading={loading} />
             <Modal
                 hardwareAccelerated={true}
@@ -85,7 +87,7 @@ const Home = () => {
                 />
                 <IconButton
                     icon="filter-variant"
-                    color={'red'}
+                    color={'#FFF'}
                     size={35}
                     onPress={() => setFilterModalVisible(true)}
                 />
@@ -105,7 +107,7 @@ const Home = () => {
         if (Object.keys(cardState.allCards).length > 0)
             return (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: '50%' }}>
-                    <Text style={{ fontSize: 17 }}>Sorry, we can't find anything..</Text>
+                    <Text style={{ color: "#FFF", fontSize: 17 }}>Sorry, we can't find anything..</Text>
                 </View>
             )
         return null
@@ -116,7 +118,6 @@ const Home = () => {
     }
 
     function renderListItem({ item }: any) {
-        console.log('renderedListItem')
         if (item.data && item.data.length > 0) {
             return (
                 <>
@@ -152,13 +153,14 @@ const styles = StyleSheet.create({
     },
     sectionHeader: {
         fontSize: 20,
-        color: '#000',
+        color: '#FFF',
+        fontWeight: 'bold'
     },
     sectionSeperator: {
         flex: 1,
         alignSelf: 'center',
         marginLeft: 20,
-        borderBottomColor: 'black',
+        borderBottomColor: '#FFF',
         borderBottomWidth: 2,
     },
     modalContainer: {
