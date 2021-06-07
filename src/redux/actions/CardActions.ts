@@ -1,5 +1,5 @@
 import { HearthStoneCard, HearthStoneCardCollection } from "../../model";
-import { CardState } from "../reducers/CardReducer";
+import { CardState, SectionListItem } from "../reducers/CardReducer";
 import { TYPES } from "../reducers/Types";
 
 export const setCards = (allCards: HearthStoneCardCollection) => {
@@ -56,11 +56,19 @@ export const filterByName = (name: string, currentState: CardState) => {
 }
 
 const generateSectionList = (collection: HearthStoneCardCollection) => {
-    return Object.keys(collection)
-        .map((key: string) => ({
+    const sectionList: SectionListItem[] = []
+
+    for (let key in collection) {
+        if (collection[key].length === 0)
+            continue;
+
+        sectionList.push({
             title: key,
             data: collection[key],
-        }))
+        })
+    }
+
+    return sectionList
 }
 
 const generateCardMechanicList = (collection: HearthStoneCardCollection) => {
