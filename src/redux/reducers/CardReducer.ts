@@ -4,7 +4,7 @@ import { TYPES } from "./Types"
 export type CardState = {
     allCards: HearthStoneCardCollection,
     sectionList: [{ title: string, data: HearthStoneCard[] }] | [],
-    cardMechanicList: Object
+    cardMechanicList: { [key: string]: [] }
 }
 
 export const initialCardState: CardState = {
