@@ -6,13 +6,14 @@ export const setCards = (allCards: HearthStoneCardCollection) => {
     const t1 = Date.now();
     const sectionList = generateSectionList(allCards);
     const cardMechanicList = generateCardMechanicList(allCards);
+    const cardMechanics = Object.keys(cardMechanicList)
     const t2 = Date.now()
 
     console.log(`setCards // ${t2 - t1} ms.`);
 
     return {
         type: TYPES.SET_CARDS,
-        payload: { allCards, sectionList, cardMechanicList }
+        payload: { allCards, sectionList, cardMechanicList, cardMechanics }
     }
 }
 
@@ -36,7 +37,6 @@ export const filterByMechanic = (mechanic: string, currentState: CardState) => {
 }
 
 export const filterByName = (name: string, currentState: CardState) => {
-    console.log(name);
     if (!name)
         return {}
 

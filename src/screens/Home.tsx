@@ -2,9 +2,8 @@ import React from "react"
 import { FlatList, StyleSheet, Text, View, Modal, TouchableWithoutFeedback, ImageBackground, SafeAreaView } from "react-native"
 import { Button, Headline, IconButton, Searchbar } from "react-native-paper"
 import ButtonFilter from "../components/ButtonFilter"
-import Card from "../components/Card"
+import { ListItem } from "../components/ListItem"
 import Loading from "../components/Loading"
-import { HearthStoneCard } from "../model"
 import { filterByMechanic, filterByName, setCards } from "../redux/actions/CardActions"
 import { cardReducer, CardState, initialCardState } from "../redux/reducers/CardReducer"
 import Services from "../services/"
@@ -12,7 +11,7 @@ import Services from "../services/"
 const Home = () => {
     const [cardState, dispatch]: [cardState: CardState, dispatch: any] = React.useReducer(cardReducer, initialCardState)
     const [filterModalVisible, setFilterModalVisible] = React.useState(false);
-    const mechanicList = React.useMemo(() => Object.keys(cardState.cardMechanicList), [cardState.cardMechanicList])
+    //const mechanicList = React.useMemo(() => Object.keys(cardState.cardMechanicList), [cardState.cardMechanicList])
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = (query: string) => setSearchQuery(query);
     const [loading, setLoading] = React.useState(true);
@@ -64,7 +63,7 @@ const Home = () => {
                     <View style={styles.modalView}>
                         <Headline style={{ marginBottom: 25, borderBottomWidth: 0.7 }}>Select a card mechanic...</Headline>
                         <ButtonFilter
-                            keys={mechanicList}
+                            keys={cardState.cardMechanics}
                             onPick={(result: string) => dispatch(filterByMechanic(result, cardState))}
                         />
                         <Button labelStyle={{ fontSize: 20 }} onPress={() => setFilterModalVisible(false)}>OK</Button>
@@ -92,7 +91,7 @@ const Home = () => {
                 keyExtractor={(section) => section.title}
                 initialNumToRender={3}
                 maxToRenderPerBatch={3}
-                renderItem={renderListItem}
+                renderItem={({ item }) => (<ListItem section={item} />)}
                 ListEmptyComponent={renderNoResult}
             />
         </>
@@ -107,37 +106,6 @@ const Home = () => {
             )
         return null
     }
-
-    function renderCard({ item }: { item: HearthStoneCard }) {
-        return (<Card data={item} />)
-    }
-
-    function renderListItem({ item }: any) {
-        if (item.data && item.data.length > 0) {
-            return (
-                <>
-                    <View style={{ padding: 10, flexDirection: 'row' }}>
-                        <Text style={styles.sectionHeader}>
-                            {item.title}
-                        </Text>
-                        <View style={styles.sectionSeperator} />
-                    </View>
-                    <FlatList
-                        keyExtractor={(item, index) => item.cardId + index}
-                        horizontal
-                        initialNumToRender={3}
-                        maxToRenderPerBatch={5}
-                        windowSize={10}
-                        showsHorizontalScrollIndicator={false}
-                        data={item.data}
-                        renderItem={renderCard}
-                    />
-                </>
-            )
-        }
-        return null
-    }
-
 }
 
 const styles = StyleSheet.create({
