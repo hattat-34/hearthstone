@@ -1,12 +1,6 @@
-import React from "react"
-import { Text, View } from "react-native"
+import React from "react";
+import Home from "./screens/Home";
 
-const Hearthstone = () => {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Hello World</Text>
-    </View>
-  )
-}
+const Hearthstone = () => (<Home />);
 
 export default Hearthstone
