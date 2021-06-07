@@ -1,5 +1,5 @@
 import React from "react"
-import { FlatList, StyleSheet, Text, View, Modal, TouchableWithoutFeedback, ImageBackground } from "react-native"
+import { FlatList, StyleSheet, Text, View, Modal, TouchableWithoutFeedback, ImageBackground, SafeAreaView } from "react-native"
 import { Button, Headline, IconButton, Searchbar } from "react-native-paper"
 import ButtonFilter from "../components/ButtonFilter"
 import Card from "../components/Card"
@@ -47,6 +47,7 @@ const Home = () => {
                 source={require('../assets/images/bg.png')}
                 resizeMode={"cover"}
             />
+            <SafeAreaView />
             <Loading loading={loading} />
             <Modal
                 hardwareAccelerated={true}
@@ -55,6 +56,7 @@ const Home = () => {
                 animationType="slide"
                 onRequestClose={() => setFilterModalVisible(false)}
             >
+                <SafeAreaView />
                 <TouchableWithoutFeedback onPress={() => setFilterModalVisible(false)}>
                     <View style={styles.modalOverlay} />
                 </TouchableWithoutFeedback>

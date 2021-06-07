@@ -26,4 +26,5 @@ target 'hearthstone' do
   post_install do |installer|
     react_native_post_install(installer)
   end
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 end
