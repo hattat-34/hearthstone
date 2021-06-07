@@ -7,6 +7,7 @@ import Loading from "../components/Loading"
 import { HearthStoneCard } from "../model"
 import { filterByMechanic, filterByName, setCards } from "../redux/actions/CardActions"
 import { cardReducer, CardState, initialCardState } from "../redux/reducers/CardReducer"
+import Services from "../services/"
 
 const Home = () => {
     const [cardState, dispatch]: [cardState: CardState, dispatch: any] = React.useReducer(cardReducer, initialCardState)
@@ -19,25 +20,8 @@ const Home = () => {
 
     React.useEffect(() => {
         const getAllCards = () => {
-            fetch("https://omgvamp-hearthstone-v1.p.rapidapi.com/cards", {
-                "method": "GET",
-                "headers": {
-                    "x-rapidapi-key": "fcd47dd5b0msh8d362b80a2d33bep1c48e4jsnd7bb0da826a7",
-                    "x-rapidapi-host": "omgvamp-hearthstone-v1.p.rapidapi.com"
-                }
-            })
-                .then(response => {
-                    if (response.status === 200)
-                        response.json()
-                            .then(allcards => {
-                                console.log('result: ', allcards);
-                                dispatch(setCards(allcards))
-                            })
-                            .catch((error) => console.log(error))
-                    else
-                        console.log('response status: ', response.status)
-                })
-                .catch((error) => console.log(error))
+            Services.Card.getAllCards()
+                .then(res => dispatch(setCards(res)));
         }
         getAllCards();
     }, [])
