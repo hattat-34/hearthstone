@@ -2,7 +2,7 @@ import React from "react"
 import { FlatList, StyleSheet, Text, View, Modal, TouchableWithoutFeedback, ImageBackground, SafeAreaView } from "react-native"
 import { Button, Headline, IconButton, Searchbar } from "react-native-paper"
 import ButtonFilter from "../components/ButtonFilter"
-import { ListItem } from "../components/ListItem"
+import { Deck } from "../components/Deck"
 import Loading from "../components/Loading"
 import { filterByMechanic, filterByName, setCards } from "../redux/actions/CardActions"
 import { cardReducer, CardState, initialCardState } from "../redux/reducers/CardReducer"
@@ -91,7 +91,7 @@ const Home = () => {
                 keyExtractor={(section) => section.title}
                 initialNumToRender={3}
                 maxToRenderPerBatch={3}
-                renderItem={({ item }) => (<ListItem section={item} />)}
+                renderItem={({ item }) => (<Deck section={item} />)}
                 ListEmptyComponent={renderNoResult}
             />
         </>

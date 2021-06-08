@@ -4,11 +4,11 @@ import { HearthStoneCard } from "../model/Cards"
 import { SectionListItem } from "../redux/reducers/CardReducer"
 import Card from './Card'
 
-interface ListItemProps {
+interface DeckProps {
     section: SectionListItem
 }
 
-export const ListItem = ({ section }: ListItemProps) => {
+export const Deck = ({ section }: DeckProps) => {
     if (section.data.length > 0) {
         return (
             <>
@@ -54,4 +54,4 @@ export const styles = StyleSheet.create({
     },
 })
 
-export default memo(ListItem);
+export default memo(Deck);
