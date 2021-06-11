@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { memo } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 interface ButtonFilterProps {
@@ -16,8 +16,10 @@ const ButtonFilter = ({ keys, onPick }: ButtonFilterProps) => {
       {
         renderButton("All")
       }
-      <ScrollView style={{ marginVertical: 10 }}showsVerticalScrollIndicator={false}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around', flexWrap: "wrap" }}>
+      <ScrollView style={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.buttonContainer}>
           {
             keys.map((title) => renderButton(title))
           }
@@ -29,7 +31,7 @@ const ButtonFilter = ({ keys, onPick }: ButtonFilterProps) => {
   function renderButton(title: string) {
     return (
       <Button
-        style={{ borderRadius: 15, borderWidth: 2, marginVertical: 5 }}
+        style={styles.button}
         key={title}
         mode='contained'
         color={status === title ? 'black' : 'white'}
@@ -42,28 +44,22 @@ const ButtonFilter = ({ keys, onPick }: ButtonFilterProps) => {
       </Button>
     )
   }
-
-
-  //   <FlatList
-  //     contentContainerStyle={{ flexDirection: 'row', justifyContent: 'space-around', flexWrap: "wrap" }}
-  //     keyExtractor={(item, index) => item + index}
-  //     data={keys}
-  //     renderItem={renderButton}
-  //   />
-  // )
-
-  // function renderButton({ item }: { item: string }) {
-  //   return (
-  //     <Button
-  //       key={item}
-  //       mode='contained'
-  //       color={status === item ? 'blue' : 'white'}
-  //       onPress={() => setStatus(item)}
-  //     >
-  //       {item}
-  //     </Button>
-  //   )
-  // }
 };
+
+const styles = StyleSheet.create({
+  listContainer: {
+    marginVertical: 10
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flexWrap: "wrap"
+  },
+  button: {
+    borderRadius: 15,
+    borderWidth: 2,
+    marginVertical: 5
+  },
+})
 
 export default memo(ButtonFilter)

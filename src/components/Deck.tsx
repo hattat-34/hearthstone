@@ -13,14 +13,14 @@ export const Deck = ({ section }: DeckProps) => {
         return (
             <>
 
-                <View style={{ padding: 10, flexDirection: 'row' }}>
+                <View style={styles.headerContainer}>
                     <Text style={styles.sectionHeader}>
                         {section.title}
                     </Text>
                     <View style={styles.sectionSeperator} />
                 </View>
                 <FlatList
-                    keyExtractor={(item, index) => item.cardId + index}
+                    keyExtractor={(item) => item.cardId}
                     horizontal
                     initialNumToRender={3}
                     maxToRenderPerBatch={3}
@@ -40,6 +40,10 @@ function renderCard({ item }: { item: HearthStoneCard }) {
 }
 
 export const styles = StyleSheet.create({
+    headerContainer: {
+        padding: 10,
+        flexDirection: 'row'
+    },
     sectionHeader: {
         fontSize: 20,
         color: '#FFF',
